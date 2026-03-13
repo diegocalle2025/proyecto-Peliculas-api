@@ -32,7 +32,62 @@ const createGenero = async (req = request, res = response) => {
     }
 }
 
+
+const updateGenero = async (req, res) => {
+
+ try {
+
+  const { id } = req.params;
+
+  const generoActualizado = await Genero.findByIdAndUpdate(
+   id,
+   req.body,
+   { new: true }
+  );
+
+  res.json(generoActualizado);
+
+ } catch (error) {
+
+  console.log(error);
+
+  res.status(500).json({
+   msg: "Error al actualizar genero"
+  });
+
+ }
+
+};
+
+
+
+const deleteGenero = async (req, res) => {
+
+ try {
+
+  const { id } = req.params;
+
+  await Genero.findByIdAndDelete(id);
+
+  res.json({
+   msg: "Genero eliminado correctamente"
+  });
+
+ } catch (error) {
+
+  console.log(error);
+
+  res.status(500).json({
+   msg: "Error al eliminar genero"
+  });
+
+ }
+
+};
+
 module.exports = {
-    getGeneros,
-    createGenero
+ getGeneros,
+ createGenero,
+ updateGenero,
+ deleteGenero
 };
